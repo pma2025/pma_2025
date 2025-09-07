@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <script>
+            const save = () => {
+                var payload = {
+                        name: document.getElementById("accountName").value,
+                        email: document.getElementById("accountEmail").value,
+                        password: document.getElementById("accountPassword").value
+                };
+                console.log("Sending payload:", payload);
+                fetch("http://localhost:8080/account", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: payload
+                });
+                return false;
+            };
+        </script>
+    </head>
+    <body>
+        <h1>Account Service</h1>
+        <p>This is the account service.</p>
+
+        <form action="http://localhost:8080/account" method="post">
+
+            <label for="accountName">Name:</label>
+            <input type="text" id="accountName" name="accountName" value="1berto"><br>
+
+            <label for="accountEmail">Email:</label>
+            <input type="text" id="accountEmail" name="accountEmail" value="1berto@example.com"><br>
+
+            <label for="accountPassword">Password:</label>
+            <input type="password" id="accountPassword" name="accountPassword" value="123"><br>
+
+            <button type="button" onclick="save();">Submit</button>
+        </form>
+        <div id="account-list">
+
+        </div>
+    </body>
+</html>
