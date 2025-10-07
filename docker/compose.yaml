@@ -1,6 +1,7 @@
 name: example
 
 services:
+
   web:
     build:
       dockerfile_inline: |
