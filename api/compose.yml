@@ -37,10 +37,48 @@ services:
     environment:
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
 
-
   gateway:
     build:
       context: ./pma252.gateway-service
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+  
+  product:
+    build:
+      context: ./pma252.product-service
+      dockerfile: Dockerfile
+    hostname: product
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: always
+    deploy:
+      replicas: 1
+    depends_on:
+      - db
+
+  order:
+    build:
+      context: ./pma252.order-service
+      dockerfile: Dockerfile
+    hostname: order
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: always
+    deploy:
+      replicas: 1
+    depends_on:
+      - db
+  exchange:
+    build:
+      context: ./pma252.exchange-service
+      dockerfile: Dockerfile
+    hostname: exchange
+    environment:
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+  
